@@ -158,7 +158,15 @@
       url = experienceEditor.Web.setQueryStringValue(url, "sc_ee_fb", "false");
       url = experienceEditor.Web.removeQueryStringParameter(url, "sc_version");
 
-      experienceEditor.navigateToUrl(url);
+      var postContext = experienceEditor.generateDefaultContext();
+      postContext.currentContext.argument = itemId;
+      experienceEditor.Web.postServerRequest("ExperienceEditor.Treecrumb.ContextSiteResolver", postContext.currentContext, function (response) {
+        var siteName = response.responseValue.value;
+        if (siteName) {
+          url = experienceEditor.Web.setQueryStringValue(url, "sc_site", siteName)
+          experienceEditor.navigateToUrl(url);
+        }
+      });
     },
 
     navigateToItemInCE: function (itemId) {

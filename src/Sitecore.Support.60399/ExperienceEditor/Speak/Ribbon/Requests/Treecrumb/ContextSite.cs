@@ -70,6 +70,10 @@ namespace Sitecore.Support.ExperienceEditor.Speak.Ribbon.Requests.Treecrumb
                       if (scSiteIndex >= 0)
                       {
                         string newUrl = base.RequestContext.Argument.Replace(parts[scSiteIndex], "sc_site=" + site.Name);
+                        if(site.Name == "shell")
+                        {
+                          newUrl = base.RequestContext.Argument.Replace(parts[scSiteIndex], "sc_site=website");
+                        }
                         result.Value = newUrl;
                       }
                     }
